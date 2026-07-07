@@ -56,26 +56,33 @@ group by size
 -- List the top 5 most ordered pizza types along with their quantities.
 
 
-
-select pizza_type_id , count(pizza_type_id)from pizza_types
-group by pizza_type_id
-
-select 
-    p.pizza_id ,
-   max(count(p.pizza_id))
-    
-    from pizzas as p
-
-join 
-    order_details as od 
-on  p.pizza_id = od.pizza_id
-
-group by p.pizza_id
+-- We need two things : pizza types and total quantity ordered.
 
 
+--pizza types is in pizza_type table and quantity is in order_details table so , they both are connecte with one table pizzas 
 
+-- What operations are needed?
+-- Join the tables
+-- Group by pizza type
+-- Sum the quantities
+-- Sort in descending order
+-- Return the top 5
 
+select top 5 pt.name , sum(od.quantity) as total_qty
 
+from order_details od   
+
+join  pizzas p  
+
+on p.pizza_id = od.pizza_id
+
+join pizza_types pt  
+
+on pt.pizza_type_id = p.pizza_type_id  
+
+group by  pt.name  
+
+order by total_qty desc
 
 
 
